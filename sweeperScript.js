@@ -100,7 +100,10 @@ function renderBoard(){
                 cell.classList.add("revealed");
                 if (board[i][j].isCat){
                     cell.classList.add("cat");
-                    cell.textContent =":(";
+                    const catImage = document.createElement("img");
+                    catImage.src = "creature.png";
+                    catImage.classList.add("catImg");
+                    cell.appendChild(catImage);
                 }
                 else if (board[i][j].count > 0){
                     cell.textContent = board[i][j].count;
@@ -109,9 +112,7 @@ function renderBoard(){
             cell.addEventListener("click", () => revealCell(i,j));
             gameBoard.appendChild(cell);
         }
-        gameBoard.appendChild(
-            document.createElement("br")
-        );
+        gameBoard.appendChild(document.createElement("br"));
     }
 }
 
