@@ -12,10 +12,12 @@ body {
     margin: 20px;
 }
 .cell {
-    width: 30px;
-    height: 30px;
+    width: 38px;
+    height: 38px;
     border: 1px solid rgb(173, 0, 87);
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     vertical-align: middle;
     font-size: 20px;
@@ -28,6 +30,13 @@ body {
     /* Default color for unrevealed tile text */
     color: rgb(0, 89, 255);
 }
+.rows{
+    display: flex;
+    flex-direction: row;
+}
+#gameBoard{
+    display: inline-block;
+}
 .revealed {
     /* Color for revealed tiles */
     background-color: rgb(255, 255, 65);
@@ -37,9 +46,10 @@ body {
 }
 .cat {
     /* Color for cats */
-    background-color: rgb(255, 44, 44);
+    background-color: rgb(102, 0, 0);
 }
 .catImg{
     width: 100%;
-    height: 100%;
+    height: auto;
+    vertical-align: middle;
 }
