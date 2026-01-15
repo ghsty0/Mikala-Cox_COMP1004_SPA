@@ -5,8 +5,22 @@ export class Sweeper{
         this.catCount = catCount
         this.gameBoard = gameBoard
         this.cats = 0
+        this.cellsLeft = (this.width * this.height) - this.catCount
         this.cells = []
         this.firstClick = true
+        this.gameActive = true
+        this.gameEndedLoss = new CustomEvent("gameEnd", {
+            detail: {
+                winState: false,
+                game: this
+            }
+        })
+        this.gameEndedWin = new CustomEvent("gameEnd", {
+            detail: {
+                winState: true,
+                game: this
+            }
+        })
         this.populateCells()
     }
     populateCells(){
@@ -39,10 +53,14 @@ export class Sweeper{
         return this.cells.find((value) => value.x === x && value.y === y)
     }
     revealCell(x,y){
+        if (!this.gameActive){
+            return;
+        }
         const cell = this.getCell(x,y)
         if (!cell){return;}
         if (cell.revealed){return;}
         cell.revealed = true;
+        this.cellsLeft--;
         cell.element.classList.add("revealed");
         if (this.firstClick){
             this.placeCats();
@@ -54,6 +72,8 @@ export class Sweeper{
             catImage.src = "assets/images/cat.png";
             catImage.classList.add("catImg");
             cell.element.appendChild(catImage);
+            window.alert("woke up a cat")
+            this.endGame(false)
         }
         else{
             const numCats = this.countAdjacentCats(x,y);
@@ -67,6 +87,9 @@ export class Sweeper{
                         this.revealCell(x+dx, y+dy)
                     }
                 }
+            }
+            if (this.cellsLeft <= 0){
+                this.endGame(true)
             }
         }
 
@@ -97,7 +120,10 @@ export class Sweeper{
         }
         return adjacentCats;
     }
-
+    endGame(winState){
+        this.gameBoard.dispatchEvent(winState? this.gameEndedWin: this.gameEndedLoss);
+        this.gameActive = false;
+    }
     clearBoard(){
         //when finish, clear board and destroy game
         this.gameBoard.innerHTML = "";
