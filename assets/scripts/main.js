@@ -7,7 +7,7 @@ function resetGame(){
     if (game){
         game.clearBoard()
     }
-    game = new Sweeper(8,8,3, gameBoard)
+    game = new Sweeper(8,8,10, gameBoard)
 }
 resetGame()
 window.resetGame = resetGame;
