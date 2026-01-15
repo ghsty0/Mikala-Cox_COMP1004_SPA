@@ -1,9 +1,14 @@
-h1 {color: rgb(0, 80, 47);}
-h2 {color: rgb(0, 80, 47);}
-p {color: rgb(120, 238, 234);}
+h1 {color: rgb(107, 0, 59);}
+h2 {color: rgb(150, 45, 89);}
+p {color: rgb(175, 81, 133);}
+
+#testing{
+    height: 400px;
+    width: 400px;
+}
 
 body {
-    background-color: rgb(247, 151, 175);
+    background-color: rgb(255, 167, 167);
     font-family: Arial, sans-serif;
     text-align: center;
 }
@@ -12,13 +17,13 @@ body {
     margin: 20px;
 }
 .cell {
-    width: 38px;
-    height: 38px;
-    border: 1px solid rgb(173, 0, 87);
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgb(179, 0, 89);
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    text-align:center;
     vertical-align: middle;
     font-size: 20px;
     border-radius: 4px;
@@ -26,9 +31,6 @@ body {
 
     /* Default color for unrevealed tiles */
     background-color: rgb(5, 172, 149);
-
-    /* Default color for unrevealed tile text */
-    color: rgb(0, 89, 255);
 }
 .rows{
     display: flex;
@@ -37,16 +39,27 @@ body {
 #gameBoard{
     display: inline-block;
 }
+.button{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    gap: 3px;
+
+    background-color: rgb(124, 0, 68);
+    border-radius: 1px solid rgb(179, 0, 89);
+    color:rgb(180, 253, 229)
+}
 .revealed {
     /* Color for revealed tiles */
-    background-color: rgb(255, 255, 65);
+    background-color: rgb(232, 235, 91);
 
     /* Color for revealed tile text */
     color: rgb(0,0,0);
 }
 .cat {
     /* Color for cats */
-    background-color: rgb(102, 0, 0);
+    background-color: rgb(255, 64, 64);
 }
 .catImg{
     width: 100%;

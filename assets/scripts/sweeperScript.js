@@ -97,5 +97,9 @@ export class Sweeper{
         }
         return adjacentCats;
     }
-}
 
+    clearBoard(){
+        //when finish, clear board and destroy game
+        this.gameBoard.innerHTML = "";
+    }
+}
