@@ -37,7 +37,7 @@ export class Sweeper{
     createCell(x,y){
         const cell = document.createElement("div");
         cell.classList.add("cell");
-        // this.gameBoard.appendChild(cell);
+        this.gameBoard.appendChild(cell);
         
         this.cells.push({
             x: x,
@@ -46,7 +46,19 @@ export class Sweeper{
             revealed: false,
             isCat: false
         })
-        cell.addEventListener("click", () => this.revealCell(x,y));
+        //cell.addEventListener("click", () => this.revealCell(x,y));
+        document.addEventListener("mouseup", (event) => {
+            if (event.button == 0){
+                this.revealCell(x,y);
+                console.log(': left button!');
+            }
+            else if (event.button == 1){
+                console.log(': middle button!');
+            }
+            else if (event.button == 2){
+                console.log(': right button!');
+            }
+        });
         return cell;
     }
     getCell(x,y){
