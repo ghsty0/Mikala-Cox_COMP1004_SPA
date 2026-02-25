@@ -47,7 +47,7 @@ export class Sweeper{
             isCat: false
         })
         //cell.addEventListener("click", () => this.revealCell(x,y));
-        document.addEventListener("mouseup", (event) => {
+        cell.addEventListener("mouseup", (event) => {
             if (event.button == 0){
                 this.revealCell(x,y);
                 console.log(': left button!');
