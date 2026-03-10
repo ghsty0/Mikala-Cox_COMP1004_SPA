@@ -44,10 +44,11 @@ export class Sweeper{
             y: y,
             element: cell,
             revealed: false,
-            isCat: false
+            isCat: false,
+            isFlagged: false
         })
         //cell.addEventListener("click", () => this.revealCell(x,y));
-        cell.addEventListener("mouseup", (event) => {
+        cell.addEventListener("mousedown", (event) => {
             if (event.button == 0){
                 this.revealCell(x,y);
                 console.log(': left button!');
@@ -56,7 +57,11 @@ export class Sweeper{
                 console.log(': middle button!');
             }
             else if (event.button == 2){
+                this.flagCell(x,y);
                 console.log(': right button!');
+            }
+            else{
+                
             }
         });
         return cell;
@@ -84,8 +89,8 @@ export class Sweeper{
             catImage.src = "assets/images/cat.png";
             catImage.classList.add("catImg");
             cell.element.appendChild(catImage);
-            window.alert("woke up a cat")
-            this.endGame(false)
+            window.alert("woke up a cat");
+            this.endGame(false);
         }
         else{
             const numCats = this.countAdjacentCats(x,y);
@@ -105,6 +110,17 @@ export class Sweeper{
             }
         }
 
+    }
+    flagCell(x,y){
+        if (!this.gameActive){
+            return;
+        }
+        const cell = this.getCell(x,y)
+        if (!cell){return;}
+        if (cell.revealed){return;}
+        else{
+            console.log("Flagged this tile");
+        }
     }
     placeCats(){
         while (this.cats < this.catCount){
@@ -133,6 +149,25 @@ export class Sweeper{
         return adjacentCats;
     }
     endGame(winState){
+        if (winState == false){
+            let i = 0;
+            let j = 0;
+            for (i = 0; i < this.height; i++){
+                for (j = 0; j < this.width; j++){
+                    console.log("height is: ", this.height, "width is: ", this.width);
+                    const cell = this.getCell(i,j)
+                    const numCats = this.countAdjacentCats(i,j);
+                    if (cell.isCat){continue;}
+                    else{
+                        if (numCats>0){
+                            cell.element.textContent = numCats;
+                        }
+                        cell.revealed = true;
+                        cell.element.classList.add("revealed"); 
+                    }
+                }
+            }
+        }
         this.gameBoard.dispatchEvent(winState? this.gameEndedWin: this.gameEndedLoss);
         this.gameActive = false;
     }
