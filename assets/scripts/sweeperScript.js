@@ -45,7 +45,8 @@ export class Sweeper{
             element: cell,
             revealed: false,
             isCat: false,
-            isFlagged: false
+            isFlagged: false,
+            clickedCat: false
         })
         //cell.addEventListener("click", () => this.revealCell(x,y));
         cell.addEventListener("mousedown", (event) => {
@@ -81,12 +82,8 @@ export class Sweeper{
             this.firstClick = false;
         }
         if (cell.isCat){
-            cell.element.classList.add("cat");
-            const catImage = document.createElement("img");
-            catImage.src = "assets/images/cat.png";
-            catImage.classList.add("catImg");
-            cell.element.appendChild(catImage);
             window.alert("woke up a cat");
+            cell.clickedCat = true;
             this.endGame(false);
         }
         else{
@@ -162,7 +159,13 @@ export class Sweeper{
                     console.log("height is: ", this.height, "width is: ", this.width);
                     const cell = this.getCell(i,j)
                     const numCats = this.countAdjacentCats(i,j);
-                    if (cell.isCat){continue;}
+                    if (cell.isCat){
+                        cell.element.classList.add("cat");
+                        const catImage = document.createElement("img");
+                        catImage.src = "assets/images/cat.png";
+                        catImage.classList.add("catImg");
+                        cell.element.appendChild(catImage);
+                    }
                     else{
                         if (numCats>0){
                             cell.element.textContent = numCats;
