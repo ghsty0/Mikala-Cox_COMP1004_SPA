@@ -60,9 +60,6 @@ export class Sweeper{
                 this.flagCell(x,y);
                 console.log(': right button!');
             }
-            else{
-                
-            }
         });
         return cell;
     }
@@ -118,9 +115,17 @@ export class Sweeper{
         const cell = this.getCell(x,y)
         if (!cell){return;}
         if (cell.revealed){return;}
-        else{
-            console.log("Flagged this tile");
+        if (cell.isFlagged == false){
+            const pawImage = document.createElement("img");
+            pawImage.src = "assets/images/paw.png";
+            pawImage.classList.add("pawImg");
+            cell.element.appendChild(pawImage);
+            cell.isFlagged = true;
         }
+        else{
+            cell.isFlagged = false;
+        }
+        console.log(cell.isFlagged);
     }
     placeCats(){
         while (this.cats < this.catCount){
@@ -149,9 +154,9 @@ export class Sweeper{
         return adjacentCats;
     }
     endGame(winState){
+        let i = 0;
+        let j = 0;
         if (winState == false){
-            let i = 0;
-            let j = 0;
             for (i = 0; i < this.height; i++){
                 for (j = 0; j < this.width; j++){
                     console.log("height is: ", this.height, "width is: ", this.width);
@@ -164,6 +169,19 @@ export class Sweeper{
                         }
                         cell.revealed = true;
                         cell.element.classList.add("revealed"); 
+                    }
+                }
+            }
+        }
+        else{
+            for (i = 0; i < this.height; i++){
+                for (j = 0; j < this.width; j++){
+                    const cell = this.getCell(i,j)
+                    if (cell.isCat){
+                        const pawImage = document.createElement("img");
+                        pawImage.src = "assets/images/paw.png";
+                        pawImage.classList.add("pawImg");
+                        cell.element.appendChild(pawImage);
                     }
                 }
             }
