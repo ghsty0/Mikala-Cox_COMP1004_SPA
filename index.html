@@ -3,7 +3,7 @@
 	<head>
 		<title> CATSWEEPER </title>
 		<link rel="stylesheet" href="styles.css">
-		<script src = "assets/scripts/main.js" defer type = "module"></script>
+		<script src = "assets/scripts/main.js" defer="body" type = "module"></script>
 	</head>
 	<body>
 		<h1>Welcome To CatSweeper!</h1>
@@ -11,7 +11,12 @@
 			<h2> Traverse the blanket without waking up any of your cats! </h2>
 			<div id = "gameBoard"></div>
 			<br>
-			<button class="button" type="button" onclick="resetGame()"> Restart </button>
+			<button class="button" type="button" name = "restart" onclick="resetGame()"> Restart </button>
+			<label for = "difficulty"> Choose a difficulty: </label>
+			<select name="diffDropDown" id = "difficulty">
+				<option value = "1"> Easy </option>
+				<option value = "2"> Intermediate </option>
+				<option value = "3"> Hard </option> </select>
 		</section>
 		<img src="assets/images/paw.png" id="testing">
 	</body>

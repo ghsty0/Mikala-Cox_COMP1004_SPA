@@ -154,9 +154,10 @@ export class Sweeper{
         let i = 0;
         let j = 0;
         if (winState == false){
-            for (i = 0; i < this.height; i++){
-                for (j = 0; j < this.width; j++){
-                    console.log("height is: ", this.height, "width is: ", this.width);
+            for (i = 0; i < this.width; i++){
+                for (j = 0; j < this.height; j++){
+                    //console.log("height is: ", this.height, "width is: ", this.width);
+                    console.log("i is: ", i, "j is: ", j);
                     const cell = this.getCell(i,j)
                     const numCats = this.countAdjacentCats(i,j);
                     if (cell.isCat){
@@ -177,10 +178,10 @@ export class Sweeper{
             }
         }
         else{
-            for (i = 0; i < this.height; i++){
-                for (j = 0; j < this.width; j++){
+            for (i = 0; i < this.width; i++){
+                for (j = 0; j < this.height; j++){
                     const cell = this.getCell(i,j)
-                    if (cell.isCat){
+                    if (cell.isCat && cell.isFlagged == false){
                         const pawImage = document.createElement("img");
                         pawImage.src = "assets/images/paw.png";
                         pawImage.classList.add("pawImg");
