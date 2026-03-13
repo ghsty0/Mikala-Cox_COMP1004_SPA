@@ -157,15 +157,19 @@ export class Sweeper{
             for (i = 0; i < this.width; i++){
                 for (j = 0; j < this.height; j++){
                     //console.log("height is: ", this.height, "width is: ", this.width);
-                    console.log("i is: ", i, "j is: ", j);
+                    //console.log("i is: ", i, "j is: ", j);
                     const cell = this.getCell(i,j)
                     const numCats = this.countAdjacentCats(i,j);
-                    if (cell.isCat){
+                    if (cell.isCat && cell.isFlagged == false){
+                        console.log("cat")
                         cell.element.classList.add("cat");
                         const catImage = document.createElement("img");
                         catImage.src = "assets/images/cat.png";
                         catImage.classList.add("catImg");
                         cell.element.appendChild(catImage);
+                    }
+                    if (cell.isCat && cell.isFlagged == true){
+                        console.log("you flagged a cat")
                     }
                     else{
                         if (numCats>0){
