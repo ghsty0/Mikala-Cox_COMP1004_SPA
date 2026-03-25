@@ -161,16 +161,16 @@ export class Sweeper{
                     const cell = this.getCell(i,j)
                     const numCats = this.countAdjacentCats(i,j);
                     if (cell.isCat && cell.isFlagged == false){
-                        console.log("cat")
                         cell.element.classList.add("cat");
                         const catImage = document.createElement("img");
                         catImage.src = "assets/images/cat.png";
                         catImage.classList.add("catImg");
                         cell.element.appendChild(catImage);
+                        console.info(cell.element);
                     }
-                    if (cell.isCat && cell.isFlagged == true){
+                    /*else if (cell.isCat && cell.isFlagged == true){
                         console.log("you flagged a cat")
-                    }
+                    }*/
                     else{
                         if (numCats>0){
                             cell.element.textContent = numCats;
