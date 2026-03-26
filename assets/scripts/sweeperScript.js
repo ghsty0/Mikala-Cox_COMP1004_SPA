@@ -9,6 +9,8 @@ export class Sweeper{
         this.cells = []
         this.firstClick = true
         this.gameActive = true
+        this.highScore = 0
+        this.score = 0
         this.gameEndedLoss = new CustomEvent("gameEnd", {
             detail: {
                 winState: false,
@@ -22,6 +24,7 @@ export class Sweeper{
             }
         })
         this.populateCells()
+        document.getElementById("score").innerHTML = this.score;
     }
     populateCells(){
         for (let y = 0; y < this.height; y++){
@@ -52,14 +55,14 @@ export class Sweeper{
         cell.addEventListener("mousedown", (event) => {
             if (event.button == 0){
                 this.revealCell(x,y);
-                console.log(': left button!');
+                //console.log(': left button!');
             }
             else if (event.button == 1){
                 console.log(': middle button!');
             }
             else if (event.button == 2){
                 this.flagCell(x,y);
-                console.log(': right button!');
+                //console.log(': right button!');
             }
         });
         return cell;
@@ -88,6 +91,9 @@ export class Sweeper{
         }
         else{
             const numCats = this.countAdjacentCats(x,y);
+            console.log("+1")
+            this.score += 1
+            document.getElementById("score").innerHTML = this.score;
             if (numCats > 0){
                 cell.element.textContent = numCats;
             }
@@ -156,8 +162,6 @@ export class Sweeper{
         if (winState == false){
             for (i = 0; i < this.width; i++){
                 for (j = 0; j < this.height; j++){
-                    //console.log("height is: ", this.height, "width is: ", this.width);
-                    //console.log("i is: ", i, "j is: ", j);
                     const cell = this.getCell(i,j)
                     const numCats = this.countAdjacentCats(i,j);
                     if (cell.isCat && cell.isFlagged == false){
@@ -168,9 +172,10 @@ export class Sweeper{
                         cell.element.appendChild(catImage);
                         console.info(cell.element);
                     }
-                    /*else if (cell.isCat && cell.isFlagged == true){
-                        console.log("you flagged a cat")
-                    }*/
+                    else if (cell.isCat && cell.isFlagged == true){
+                        console.log("you flagged a cat, +25");
+                        this.score += 25;
+                    }
                     else{
                         if (numCats>0){
                             cell.element.textContent = numCats;
@@ -182,6 +187,8 @@ export class Sweeper{
             }
         }
         else{
+            
+            this.score += 50
             for (i = 0; i < this.width; i++){
                 for (j = 0; j < this.height; j++){
                     const cell = this.getCell(i,j)
@@ -190,10 +197,18 @@ export class Sweeper{
                         pawImage.src = "assets/images/paw.png";
                         pawImage.classList.add("pawImg");
                         cell.element.appendChild(pawImage);
+                        this.score += 10;
+                        console.log("+10")
+                    }
+                    else if (cell.isCat && cell.isFlagged == true){
+                        this.score += 25
+                        console.log("+25")
                     }
                 }
             }
         }
+        document.getElementById("score").innerHTML = this.score;
+        console.log(this.score)
         this.gameBoard.dispatchEvent(winState? this.gameEndedWin: this.gameEndedLoss);
         this.gameActive = false;
     }
