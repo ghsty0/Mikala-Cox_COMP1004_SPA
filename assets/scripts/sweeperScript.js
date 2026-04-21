@@ -6,6 +6,7 @@ export class Sweeper{
         this.gameBoard = gameBoard
         this.highScore = highScore
         this.cats = 0
+        this.pawsLeft = this.catCount
         this.cellsLeft = (this.width * this.height) - this.catCount
         this.cells = []
         this.firstClick = true
@@ -26,6 +27,7 @@ export class Sweeper{
         this.populateCells()
         document.getElementById("score").innerHTML = this.score;
         document.getElementById("highScore").innerHTML = this.highScore;
+        document.getElementById("pawsLeft").innerHTML = this.pawsLeft;
     }
     populateCells(){
         for (let y = 0; y < this.height; y++){
@@ -57,9 +59,6 @@ export class Sweeper{
             if (event.button == 0){
                 this.revealCell(x,y);
                 //console.log(': left button!');
-            }
-            else if (event.button == 1){
-                console.log(': middle button!');
             }
             else if (event.button == 2){
                 this.flagCell(x,y);
@@ -120,7 +119,11 @@ export class Sweeper{
         const cell = this.getCell(x,y)
         if (!cell){return;}
         if (cell.revealed){return;}
+        if (this.pawsLeft <=0){return;}
         if (cell.isFlagged == false){
+            this.pawsLeft --;
+            console.log(this.pawsLeft);
+            document.getElementById("pawsLeft").innerHTML = this.pawsLeft;
             const pawImage = document.createElement("img");
             pawImage.src = "assets/images/paw.png";
             pawImage.classList.add("pawImg");
@@ -129,6 +132,8 @@ export class Sweeper{
         }
         else{
             cell.isFlagged = false;
+            this.pawsLeft ++;
+            document.getElementById("pawsLeft").innerHTML = this.pawsLeft;
             const paws = cell.element.getElementsByClassName("pawImg");
             for (var p of paws){
                 p.remove()
@@ -218,7 +223,9 @@ export class Sweeper{
         }
         document.getElementById("score").innerHTML = this.score;
         document.getElementById("highScore").innerHTML = this.highScore;
+        document.getElementById("pawsLeft").innerHTML = this.pawsLeft;
         console.log(this.score)
+        console.log(this.pawsLeft)
         this.gameBoard.dispatchEvent(winState? this.gameEndedWin: this.gameEndedLoss);
         this.gameActive = false;
     }
