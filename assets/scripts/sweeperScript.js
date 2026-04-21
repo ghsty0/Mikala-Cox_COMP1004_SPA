@@ -1,15 +1,15 @@
 export class Sweeper{
-    constructor(width, height, catCount, gameBoard){
+    constructor(width, height, catCount, gameBoard, highScore){
         this.width = width
         this.height = height
         this.catCount = catCount
         this.gameBoard = gameBoard
+        this.highScore = highScore
         this.cats = 0
         this.cellsLeft = (this.width * this.height) - this.catCount
         this.cells = []
         this.firstClick = true
         this.gameActive = true
-        this.highScore = 0
         this.score = 0
         this.gameEndedLoss = new CustomEvent("gameEnd", {
             detail: {
@@ -25,6 +25,7 @@ export class Sweeper{
         })
         this.populateCells()
         document.getElementById("score").innerHTML = this.score;
+        document.getElementById("highScore").innerHTML = this.highScore;
     }
     populateCells(){
         for (let y = 0; y < this.height; y++){
@@ -76,7 +77,8 @@ export class Sweeper{
         }
         const cell = this.getCell(x,y)
         if (!cell){return;}
-        if (cell.revealed){return;}
+        if (cell.revealed){return;} //CALL COUJNT FCLAG FUNCTION (make one first this brings in chording)
+        if (cell.isFlagged == true){return;}
         cell.revealed = true;
         this.cellsLeft--;
         cell.element.classList.add("revealed");
@@ -127,6 +129,10 @@ export class Sweeper{
         }
         else{
             cell.isFlagged = false;
+            const paws = cell.element.getElementsByClassName("pawImg");
+            for (var p of paws){
+                p.remove()
+            }
         }
         console.log(cell.isFlagged);
     }
@@ -207,7 +213,11 @@ export class Sweeper{
                 }
             }
         }
+        if (this.score > this.highScore){
+            this.highScore = this.score;
+        }
         document.getElementById("score").innerHTML = this.score;
+        document.getElementById("highScore").innerHTML = this.highScore;
         console.log(this.score)
         this.gameBoard.dispatchEvent(winState? this.gameEndedWin: this.gameEndedLoss);
         this.gameActive = false;

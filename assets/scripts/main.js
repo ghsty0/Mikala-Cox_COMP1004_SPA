@@ -6,6 +6,7 @@ let w = 8;
 let h = 8;
 let cc = 10;
 
+
 function setDifficulty(d){
     switch(Number(d.target.value)) {
         case 1:
@@ -31,7 +32,7 @@ function resetGame(){
     if (game){
         game.clearBoard();
     }
-    game = new Sweeper(w,h,cc, gameBoard);
+    game = new Sweeper(w,h,cc, gameBoard, highScore);
 }
 resetGame();
 window.resetGame = resetGame;
@@ -39,6 +40,11 @@ window.resetGame = resetGame;
 gameBoard.addEventListener("gameEnd", (e) => {
     console.log(`game won ${e.detail.winState}`);
 });
+
+document.addEventListener("contextmenu", (e) =>{
+    e.preventDefault();
+});
+
 
 document.getElementById("difficulty").addEventListener("change", setDifficulty);
 //difficulty changes in this file
