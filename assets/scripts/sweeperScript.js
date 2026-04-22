@@ -4,7 +4,7 @@ export class Sweeper{
         this.height = height
         this.catCount = catCount
         this.gameBoard = gameBoard
-        this.highScore = highScore
+        this.highScore = 0
         this.cats = 0
         this.pawsLeft = this.catCount
         this.cellsLeft = (this.width * this.height) - this.catCount
@@ -12,6 +12,10 @@ export class Sweeper{
         this.firstClick = true
         this.gameActive = true
         this.score = 0
+        this.WIN = "You Win! Restart to play again, or try a harder difficulty."
+        this.LOSS = "You Lose! Restart to try again, or try an easier difficulty."
+        this.RESTART = "Game in Progress"
+        this.outcome = this.RESTART
         this.gameEndedLoss = new CustomEvent("gameEnd", {
             detail: {
                 winState: false,
@@ -25,6 +29,7 @@ export class Sweeper{
             }
         })
         this.populateCells()
+        document.getElementById("OUTCOME").innerHTML = this.outcome
         document.getElementById("score").innerHTML = this.score;
         document.getElementById("highScore").innerHTML = this.highScore;
         document.getElementById("pawsLeft").innerHTML = this.pawsLeft;
@@ -141,6 +146,7 @@ export class Sweeper{
         }
         console.log(cell.isFlagged);
     }
+    
     placeCats(){
         while (this.cats < this.catCount){
             const x = Math.floor(Math.random()*this.width)
@@ -196,9 +202,10 @@ export class Sweeper{
                     }
                 }
             }
+            this.outcome = this.LOSS
+            document.getElementById("OUTCOME").innerHTML = this.outcome
         }
         else{
-            
             this.score += 50
             for (i = 0; i < this.width; i++){
                 for (j = 0; j < this.height; j++){
@@ -217,6 +224,8 @@ export class Sweeper{
                     }
                 }
             }
+            this.outcome = this.WIN
+            document.getElementById("OUTCOME").innerHTML = this.outcome
         }
         if (this.score > this.highScore){
             this.highScore = this.score;
@@ -231,6 +240,7 @@ export class Sweeper{
     }
     clearBoard(){
         //when finish, clear board and destroy game
+        
         this.gameBoard.innerHTML = "";
     }
 }

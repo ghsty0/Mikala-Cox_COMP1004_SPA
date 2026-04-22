@@ -32,7 +32,7 @@ function resetGame(){
     if (game){
         game.clearBoard();
     }
-    game = new Sweeper(w,h,cc, gameBoard, highScore);
+    game = new Sweeper(w,h,cc, gameBoard);
 }
 resetGame();
 window.resetGame = resetGame;
