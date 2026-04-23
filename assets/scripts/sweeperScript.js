@@ -1,9 +1,11 @@
 export class Sweeper{
     constructor(width, height, catCount, gameBoard, highScore){
+        //Variables to build the gameboard
         this.width = width
         this.height = height
         this.catCount = catCount
         this.gameBoard = gameBoard
+
         this.highScore = highScore
         this.cats = 0
         this.pawsLeft = this.catCount
@@ -12,6 +14,8 @@ export class Sweeper{
         this.firstClick = true
         this.gameActive = true
         this.score = 0
+
+        //Gamestate variables
         this.WIN = "You Win! Restart to play again, or try a harder difficulty."
         this.LOSS = "You Lose! Restart to try again, or try an easier difficulty."
         this.RESTART = "Game in Progress"
@@ -28,12 +32,15 @@ export class Sweeper{
                 game: this
             }
         })
+
+        //create Gameboard & Scoreboard
         this.populateCells()
         document.getElementById("OUTCOME").innerHTML = this.outcome
         document.getElementById("score").innerHTML = this.score;
         document.getElementById("highScore").innerHTML = this.highScore;
         document.getElementById("pawsLeft").innerHTML = this.pawsLeft;
     }
+    //Filling up the gameboard with cells, each cell is stored as a position in an array.
     populateCells(){
         for (let y = 0; y < this.height; y++){
             const row = document.createElement("div");
@@ -45,6 +52,7 @@ export class Sweeper{
             this.gameBoard.appendChild(row);
         }
     }
+    //Each cell is given a list of attributes. Clicking system implemented with mousedown event.
     createCell(x,y){
         const cell = document.createElement("div");
         cell.classList.add("cell");
@@ -59,30 +67,34 @@ export class Sweeper{
             isFlagged: false,
             clickedCat: false
         })
-        //cell.addEventListener("click", () => this.revealCell(x,y));
-        cell.addEventListener("mousedown", (event) => {
-            if (event.button == 0){
+        
+        cell.addEventListener("mousedown", (e) => {
+            if (e.button == 0){
                 this.revealCell(x,y);
-                //console.log(': left button!');
             }
-            else if (event.button == 2){
+            else if (e.button == 2){
                 this.flagCell(x,y);
-                //console.log(': right button!');
             }
         });
         return cell;
     }
+
+    //This retrieves the x,y position for a cell.
     getCell(x,y){
         return this.cells.find((value) => value.x === x && value.y === y)
     }
+
+    //Handles revealing cells on click. Only runs when the cell is not revealed or flagged.
     revealCell(x,y){
-        if (!this.gameActive){
-            return;
-        }
+        if (!this.gameActive){return;}
+
         const cell = this.getCell(x,y)
         if (!cell){return;}
         if (cell.revealed){return;}
         if (cell.isFlagged == true){return;}
+
+        //Adds the 'revealed' attribute to the chosen cell. 
+        //First click protection - Places cats after the player has made their first move.
         cell.revealed = true;
         this.cellsLeft--;
         cell.element.classList.add("revealed");
@@ -95,11 +107,14 @@ export class Sweeper{
             cell.clickedCat = true;
             this.endGame(false);
         }
+        //If not a cat, increase score, count & display adjacent cats.
+        //If there are no adjacent cats, surrounding non-cat cells are revealed until numCats > 0
         else{
             const numCats = this.countAdjacentCats(x,y);
             console.log("+1")
             this.score += 1
             document.getElementById("score").innerHTML = this.score;
+
             if (numCats > 0){
                 cell.element.textContent = numCats;
             }
@@ -111,24 +126,32 @@ export class Sweeper{
                     }
                 }
             }
+
             if (this.cellsLeft <= 0){
                 this.endGame(true)
             }
         }
 
     }
+
+    //Flagging a cell places a paw image marker on it, flagged cells cannot be clicked without being unflagged.
+    //Cells can only be flagged if they have not been revealed or they have already placed the maximum number of paws.
     flagCell(x,y){
-        if (!this.gameActive){
-            return;
-        }
+        if (!this.gameActive){return;}
+
         const cell = this.getCell(x,y)
         if (!cell){return;}
         if (cell.revealed){return;}
-        if (this.pawsLeft <=0){return;}
+
+        //Display on the scoreboard how many paws the player has left to use. Update whenever placed/removed.
+        //Retrieves the paw image from its filepath and adds it to the cell. Marks the cell as flagged.
+        //Alternatively, cell is unflagged, the pawImg element is removed from the cell.
         if (cell.isFlagged == false){
+            if (this.pawsLeft <= 0){return;}
             this.pawsLeft --;
             console.log(this.pawsLeft);
             document.getElementById("pawsLeft").innerHTML = this.pawsLeft;
+
             const pawImage = document.createElement("img");
             pawImage.src = "assets/images/paw.png";
             pawImage.classList.add("pawImg");
@@ -147,23 +170,33 @@ export class Sweeper{
         console.log(cell.isFlagged);
     }
     
+    //Chooses random x,y coordinates and finds the corresponding cell.
+    //If that cell is not revealed or a cat, it is given the isCat attribute.
+    //Cats is increased, this repeats until all cats for the chosen difficulty have been placed on the board.
     placeCats(){
         while (this.cats < this.catCount){
             const x = Math.floor(Math.random()*this.width)
             const y = Math.floor(Math.random()*this.height)
             const cell = this.getCell(x,y)
+
             if (!cell){continue;}
             if (cell.revealed){continue;}
             if (cell.isCat){continue;}
+
             cell.isCat = true;
             this.cats++;
         }
     }
+
+    //This is the check to see how many cats are next to a revealed cell.
+    //Each cell directly adjacent is checked for the isCat attribute. If applied, adjacentCats is incremented.
     countAdjacentCats(x,y){
         let adjacentCats = 0;
+
         for (let dy = -1; dy <= 1; dy++){
             for (let dx = -1; dx <= 1; dx++){
                 if (dx === 0 && dy === 0){continue;}
+
                 const cell = this.getCell(x+dx,y+dy)
                 if (!cell){continue;}
                 if (cell.isCat){
@@ -173,6 +206,8 @@ export class Sweeper{
         }
         return adjacentCats;
     }
+
+    //The winState can be true or false. Score is added here for additional points
     endGame(winState){
         let i = 0;
         let j = 0;
@@ -181,6 +216,7 @@ export class Sweeper{
                 for (j = 0; j < this.height; j++){
                     const cell = this.getCell(i,j)
                     const numCats = this.countAdjacentCats(i,j);
+
                     if (cell.isCat && cell.isFlagged == false){
                         cell.element.classList.add("cat");
                         const catImage = document.createElement("img");
@@ -189,14 +225,17 @@ export class Sweeper{
                         cell.element.appendChild(catImage);
                         console.info(cell.element);
                     }
+
                     else if (cell.isCat && cell.isFlagged == true){
                         console.log("you flagged a cat, +25");
                         this.score += 25;
                     }
+
                     else{
                         if (numCats>0){
                             cell.element.textContent = numCats;
                         }
+
                         cell.revealed = true;
                         cell.element.classList.add("revealed"); 
                     }
@@ -215,9 +254,11 @@ export class Sweeper{
                         pawImage.src = "assets/images/paw.png";
                         pawImage.classList.add("pawImg");
                         cell.element.appendChild(pawImage);
+
                         this.score += 10;
                         console.log("+10")
                     }
+
                     else if (cell.isCat && cell.isFlagged == true){
                         this.score += 25
                         console.log("+25")
@@ -227,20 +268,24 @@ export class Sweeper{
             this.outcome = this.WIN
             document.getElementById("OUTCOME").innerHTML = this.outcome
         }
+
         if (this.score > this.highScore){
             this.highScore = this.score;
         }
+
         document.getElementById("score").innerHTML = this.score;
         document.getElementById("highScore").innerHTML = this.highScore;
         document.getElementById("pawsLeft").innerHTML = this.pawsLeft;
+
         console.log(this.score)
         console.log(this.pawsLeft)
+
         this.gameBoard.dispatchEvent(winState? this.gameEndedWin: this.gameEndedLoss);
         this.gameActive = false;
     }
+
+    //When finished, clear board and destroy game
     clearBoard(){
-        //when finish, clear board and destroy game
-        
         this.gameBoard.innerHTML = "";
     }
 }

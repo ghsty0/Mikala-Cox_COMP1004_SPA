@@ -18,12 +18,12 @@ function setDifficulty(d){
         case 2:
             w = 12;
             h = 12;
-            cc = 35;
+            cc = 30;
             break;
         case 3:
             w = 25;
             h = 12;
-            cc = 75;
+            cc = 60;
             break;
     }
     resetGame();
