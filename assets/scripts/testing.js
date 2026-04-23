@@ -1,4 +1,5 @@
-//testing implementation
+//testing document - adjusting code before full implementation to sweeperScript
+//nothing to test
 
 /*chordCell(x,y){
     console.log("chording")

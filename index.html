@@ -20,7 +20,7 @@
 				</tr>
 				<tr>
 					<td id = "score"></td>
-					<td id = "highScore"></td>
+					<td id = "highScore">0</td>
 					<td id = "pawsLeft"></td>
 				</tr>
 			</table>
@@ -33,13 +33,14 @@
 			<div id = "gameBoard"></div>
 			<br>
 			<button class="button" type="button" name = "restart" onclick="resetGame()"> Restart </button>
-			<label for = "difficulty"> Choose a difficulty: </label>
+			<label class = "labelTxt" for = "difficulty"> Choose a difficulty: </label>
 			<select name="diffDropDown" id = "difficulty">
 				<option value = "1"> Easy </option>
 				<option value = "2"> Intermediate </option>
 				<option value = "3"> Hard </option> </select>
-			<button class="button" type="button" name = "downloadHS" onclick=""> Download Highscore </button>
-			<button class="button" type="button" name = "uploadHS" onclick=""> Upload Highscore </button>	
+			<label class="labelTxt" >Upload Highscore: </label>
+			<input class="button" accept = ".json" type="file" id="selectFile" name = "uploadHS"></button>
+			<button class="button" type="button" name = "downloadHS" onclick=""> Download Highscore </button>	
 		</section>
 		<img src="assets/images/paw.png" id="testing">
 	</body>

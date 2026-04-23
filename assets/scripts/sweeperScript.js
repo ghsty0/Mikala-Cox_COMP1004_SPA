@@ -4,7 +4,7 @@ export class Sweeper{
         this.height = height
         this.catCount = catCount
         this.gameBoard = gameBoard
-        this.highScore = 0
+        this.highScore = highScore
         this.cats = 0
         this.pawsLeft = this.catCount
         this.cellsLeft = (this.width * this.height) - this.catCount
@@ -81,7 +81,7 @@ export class Sweeper{
         }
         const cell = this.getCell(x,y)
         if (!cell){return;}
-        if (cell.revealed){return;} //CALL COUJNT FCLAG FUNCTION (make one first this brings in chording)
+        if (cell.revealed){return;}
         if (cell.isFlagged == true){return;}
         cell.revealed = true;
         this.cellsLeft--;
