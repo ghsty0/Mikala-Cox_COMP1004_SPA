@@ -58,6 +58,22 @@ function onHighScoreUploaded(){
     fileReader.readAsText(files.item(0))
 }
 
+function onDownloadClicked(){
+    console.log("meow:3")
+    const data = {
+        highScore: document.getElementById("highScore").innerHTML
+    }
+    const blob = new Blob([JSON.stringify(data)],{type: "application/json"})
+    const url = URL.createObjectURL(blob)
+    const anchor = document.createElement("a")
+    anchor.href = url
+    anchor.download = "highScore.json"
+    document.body.appendChild(anchor)
+    anchor.click()
+    anchor.remove()
+    console.log("mrrrow")
+}
+
 resetGame();
 window.resetGame = resetGame;
 
@@ -72,5 +88,6 @@ document.addEventListener("contextmenu", (e) =>{
 
 document.getElementById("difficulty").addEventListener("change", setDifficulty);
 document.getElementById("selectFile").addEventListener("change", onHighScoreUploaded);
+document.getElementById("downloadFile").addEventListener("click", onDownloadClicked);
 //difficulty changes in this file
 //restarting the game handled here

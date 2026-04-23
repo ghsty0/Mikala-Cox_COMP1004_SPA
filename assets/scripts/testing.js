@@ -1,6 +1,8 @@
 //testing document - adjusting code before full implementation to sweeperScript
 //nothing to test
 
+
+//chording was abandoned due to being out of scope
 /*chordCell(x,y){
     console.log("chording")
     let correctCats = 0
