@@ -1,7 +1,19 @@
+/* Website text & background colours, alignment*/
 h1 {color: rgb(107, 0, 59);}
 h2 {color: rgb(150, 45, 89);}
 p {color: rgb(172, 11, 99);}
 
+body{
+    background-color: rgb(255, 167, 167);
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.labelTxt{
+    color: rgb(184, 0, 77);  
+}
+
+/* Table colours, thickness, alignments */
 table, th, td{
     border: 1px solid;
     border-color: rgb(65, 100, 96);
@@ -14,77 +26,79 @@ table, th, td{
     margin-right: auto;
 }
 
-.labelTxt{
-    color: rgb(184, 0, 77);  
-}
-
-#testing{
+/* Paw logo image */
+#bigPaw{
     height: 400px;
     width: 400px;
 }
 
-body {
-    background-color: rgb(255, 167, 167);
-    font-family: Arial, sans-serif;
-    text-align: center;
+/* Gameboard Settings */
+/* Size of board, size of individual cells, alignment and colours */
+#gameBoard{
+    display: inline-block;
 }
-.board {
+
+.board{
     display: inline-block;
     margin: 20px;
 }
-.cell {
+
+.cell{
     width: 45px;
     height: 45px;
     border: 1px solid rgb(179, 0, 89);
+
     display: flex;
     justify-content: center;
     align-items: center;
     text-align:center;
     vertical-align: middle;
+
     font-size: 20px;
     border-radius: 4px;
     cursor: pointer;
 
-    /* Default color for unrevealed tiles */
     background-color: rgb(5, 172, 149);
 }
+
 .rows{
     display: flex;
     flex-direction: row;
 }
-#gameBoard{
-    display: inline-block;
+
+/* Revealed cell & text colours*/
+/* Images are sized & aligned in cells */
+.cat{
+    background-color: rgb(255, 64, 64);
 }
+
+.revealed{
+    background-color: rgb(232, 235, 91);
+    color: rgb(2, 0, 143);
+}
+
+.pawImg{
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+.catImg{
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+/* All buttons - colour, alignment and size. */
 .button{
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     padding: 3px;
     gap: 3px;
 
     background-color: rgb(124, 0, 68);
     border-radius: 1px solid rgb(179, 0, 89);
     color:rgb(180, 253, 229)
-}
-.revealed {
-    /* Color for revealed tiles */
-    background-color: rgb(232, 235, 91);
-
-    /* Color for revealed tile text */
-    color: rgb(2, 0, 143);
-    
-}
-.pawImg{
-    width: 100%;
-    height: auto;
-    vertical-align: middle;
-}
-.cat {
-    /* Color for cats */
-    background-color: rgb(255, 64, 64);
-}
-.catImg{
-    width: 100%;
-    height: auto;
-    vertical-align: middle;
 }

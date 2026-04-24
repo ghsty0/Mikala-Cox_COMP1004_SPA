@@ -103,7 +103,6 @@ export class Sweeper{
             this.firstClick = false
         }
         if (cell.isCat){
-            window.alert("woke up a cat")
             cell.clickedCat = true
             this.endGame(false)
         }
