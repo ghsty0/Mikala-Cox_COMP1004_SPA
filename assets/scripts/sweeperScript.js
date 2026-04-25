@@ -214,7 +214,7 @@ export class Sweeper{
                     //Flagged cats remain flagged to represent correct placement
                     const cell = this.getCell(i,j)
                     const numCats = this.countAdjacentCats(i,j)
-
+                    
                     if (cell.isCat && cell.isFlagged == false){
                         cell.element.classList.add("cat")
                         const catImage = document.createElement("img")
