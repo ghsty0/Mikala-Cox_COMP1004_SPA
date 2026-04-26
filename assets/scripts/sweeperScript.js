@@ -6,7 +6,7 @@ export class Sweeper{
         this.catCount = catCount
         this.gameBoard = gameBoard
 
-        this.highScore = highScore
+        this.highScore = Number(highScore)
         this.cats = 0
         this.pawsLeft = this.catCount
         this.cellsLeft = (this.width * this.height) - this.catCount
@@ -280,6 +280,9 @@ export class Sweeper{
         //Calculates if score > highscore. If it is, overwrite the highscore to be displayed. Otherwise, nothing changes.
         //Displays final update on scoreboard before it resets.
         //Ends the current game
+
+        this.highScore = Number(document.getElementById("highScore").innerHTML)
+
         if (this.score > this.highScore){
             this.highScore = this.score
         }

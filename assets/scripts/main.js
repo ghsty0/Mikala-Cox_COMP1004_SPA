@@ -43,7 +43,7 @@ function resetGame(){
         game.clearBoard()
     }
 
-    const highScore = document.getElementById("highScore").innerHTML
+    const highScore = Number(document.getElementById("highScore").innerHTML)
     if (savedHighScore > highScore){
         game = new Sweeper(w,h,cc, gameBoard, savedHighScore)
     }
@@ -63,8 +63,8 @@ function onHighScoreUploaded(){
     const fileReader = new FileReader()
     fileReader.onload = (e) => {
         const result = JSON.parse(e.target.result)
-        savedHighScore = result.highScore
-        document.getElementById("highScore").innerHTML = result.highScore
+        savedHighScore = Number(result.highScore)
+        document.getElementById("highScore").innerHTML = savedHighScore
     }
 
     fileReader.readAsText(files.item(0))
